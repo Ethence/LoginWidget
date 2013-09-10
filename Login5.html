@@ -1,0 +1,29 @@
+<!DOCTYPE html>
+<html>
+<head>
+<title>Hello Widget</title>
+<link rel="stylesheet" type="text/css" href="Login5.css">
+<script src="//ajax.googleapis.com/ajax/libs/dojo/1.9.1/dojo/dojo.js" 
+	data-dojo-config="async: true, packages: [{
+		name: 'LoginWidget',
+		location: location.pathname.replace(/\/[^/]+$/, '') + '/LoginApp/LoginWidget'
+	}]"></script>
+<script>
+	require(["dojo/dom", "dojo/_base/window", "LoginWidget/LoginWidget", "LoginWidget/DropDownMenuWidget", "dojo/domReady!"],
+		function(dom, win, LoginWidget, DropDownMenu) {
+			var out = dom.byId("loginbox");
+			var lw = new LoginWidget().placeAt(out);
+			var t = dom.byId("user-txt");
+			var opts = {
+					cname : "ddm-login",
+					targetNode: t
+			}
+			var ddm = new DropDownMenu(opts).placeAt(win.body());
+		}
+	);
+</script>
+</head>
+<body>
+<div id="loginbox"></div>
+</body>
+</html>
