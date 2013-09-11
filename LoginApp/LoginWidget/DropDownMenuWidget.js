@@ -10,6 +10,7 @@ define(["dojo/_base/declare",
         "dijit/_WidgetBase", 
         "dijit/_TemplatedMixin",
         "dojo/text!./LoginTemplates/DropDownMenuTemplate.html",
+        "LoginWidget/DropDownMenuUtils",
         "dojo/NodeList-traverse"],
     function(declare,
     		 lang,
@@ -22,15 +23,15 @@ define(["dojo/_base/declare",
     		 on,
     		 _WidgetBase,
     		 _TemplatedMixin,
-    		 template){
+    		 template,
+    		 ddmUtils){
 		
-        return declare([_WidgetBase], {
+        return declare(_WidgetBase, {
         	baseClass: "ddm-default",
         	templateString: template,
         	
         	constructor: function(opts) {
-        		this.inherited(arguments);
-        		if (opts && typeof(opts.cname) === "string") this.baseClass = opts.cname;
+        		if (opts && typeof(opts.cname) === "string") this.baseClass = opts.cname; //change typeof to isString
         		if (opts.targetNode) this.target = opts.targetNode;
         	},
         	
@@ -123,9 +124,10 @@ define(["dojo/_base/declare",
     				var t = this.target;
     				var node = this.domNode;
     				domConstruct.empty(this.domNode);
-    				array.forEach(items, function(item){
+    				array.forEach(items, function(item, index){
     					var itemNode = domConstruct.create("div", {}, node);
     					domClass.add(itemNode, itemClass);
+    					if (index === 0) domClass.add(itemNode, hltItemClass);
     					itemNode.innerHTML = item;
     				});
 
@@ -143,9 +145,14 @@ define(["dojo/_base/declare",
     			}
     		},
     		
-    		//to be overridden
+    		getItems: function () {
+    			return ["ca.ibm.com","cn.ibm.com","in.ibm.com","uk.ibm.com","us.ibm.com"];
+    		},
+    		
     		update: function() {
-    			this.fillItems(["1","2","3"]);
+    			var serverList = this.getItems();
+    			var items = ddmUtils.extendEmailServers(serverList, this.target.value);
+    			this.fillItems(items);
     		}
     		
         });

@@ -9,16 +9,20 @@
 		location: location.pathname.replace(/\/[^/]+$/, '') + '/LoginApp/LoginWidget'
 	}]"></script>
 <script>
-	require(["dojo/dom", "dojo/_base/window", "LoginWidget/LoginWidget", "LoginWidget/DropDownMenuWidget", "dojo/domReady!"],
-		function(dom, win, LoginWidget, DropDownMenu) {
+	require(["dojo/dom", "dojo/_base/window", "LoginWidget/LoginWidget", 
+	         "LoginWidget/DropDownMenuWidget", "LoginWidget/DropDownMenuWithLocalDataWidget", 
+	         "dojo/domReady!"],
+		function(dom, win, LoginWidget, DropDownMenu, DropDownMenuWithLocalData) {
 			var out = dom.byId("loginbox");
 			var lw = new LoginWidget().placeAt(out);
 			var t = dom.byId("user-txt");
 			var opts = {
 					cname : "ddm-login",
-					targetNode: t
+					targetNode: t,
+					local: ["ca.ibm.com","cn.ibm.com","in.ibm.com","uk.ibm.com","us.ibm.com"]
 			}
-			var ddm = new DropDownMenu(opts).placeAt(win.body());
+			//var ddm = new DropDownMenu(opts).placeAt(win.body());
+			var ddm = new DropDownMenuWithLocalData(opts).placeAt(win.body());
 		}
 	);
 </script>

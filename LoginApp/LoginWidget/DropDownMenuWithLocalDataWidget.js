@@ -1,17 +1,21 @@
 define(["dojo/_base/declare",
         "dojo/_base/lang",
+        "LoginWidget/DropDownMenuUtils",
         "LoginWidget/DropDownMenuWidget"],
 	function(declare,
 			 lang,
+			 ddmUtils,
 			 DropDownMenu){
-		return declare([DropDownMenu], {
-			localData: null,
+		return declare(DropDownMenu, {
+			localData: [],
 			
 			constructor: function(opts) {
-				this.inherited(arguments);
-				if (lang.isArray(opts)) this.localData = opts.servers;
-			}
-			
+				if (opts) this.localData = opts.local;
+			},
+        	
+			getItems: function() {
+				return this.localData;
+			}			
 		});	
 	}	
 );
