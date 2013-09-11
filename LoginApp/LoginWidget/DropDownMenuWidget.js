@@ -9,7 +9,8 @@ define(["dojo/_base/declare",
         "dojo/on",
         "dijit/_WidgetBase", 
         "dijit/_TemplatedMixin",
-        "dojo/text!./LoginTemplates/DropDownMenuTemplate.html"],
+        "dojo/text!./LoginTemplates/DropDownMenuTemplate.html",
+        "dojo/NodeList-traverse"],
     function(declare,
     		 lang,
     		 array,
@@ -44,6 +45,36 @@ define(["dojo/_base/declare",
 	        	    on(this.target, "click", function(evt){
 	        	    	self.update();
 	        	    	self.show();
+	        	    }),
+	        	    on(this.target, "keyup", function(evt){
+	        	    	var kc = evt.keyCode;
+	    				var itemClass = self.getItemClass();
+	    				var hltItemClass = self.getHighLightedItemClass();
+	    				var hltItemNode = query("."+hltItemClass, self.domNode); //nodelist
+	    				var allItems = query("."+itemClass, self.domNode);
+
+	    				if (hltItemNode) {
+	    					if (kc == 37 || kc == 38) {
+	    						hltItemNode.forEach(function(item) {domClass.remove(item, hltItemClass);});
+	    						var prevNode = hltItemNode.prev();
+	    						if (prevNode.length>0) prevNode.forEach(function(item) {domClass.add(item, hltItemClass);});
+	    						else allItems.last().forEach(function(item) {domClass.add(item, hltItemClass);});
+	    					}
+	    					else if (kc == 39 || kc == 40) {
+	    						hltItemNode.forEach(function(item) {domClass.remove(item, hltItemClass);});
+	    						var nextNode = hltItemNode.next();
+	    						if (nextNode.length>0) nextNode.forEach(function(item) {domClass.add(item, hltItemClass);});
+	    						else allItems.first().forEach(function(item) {domClass.add(item, hltItemClass);});
+	    					}
+	    					else if (kc == 13) {
+	    						self.target.value = hltItemNode[0].innerHTML;
+	    						self.hide();
+	    					}
+	    					else {
+	    						self.update();
+	    						self.show();
+	    					}
+	    				}
 	        	    })
         	    );
         	},
@@ -87,7 +118,6 @@ define(["dojo/_base/declare",
     		
     		fillItems: function(items) {
     			if (lang.isArray(items)) {
-    				console.log("Fill");
     				var itemClass = this.getItemClass();
     				var hltItemClass = this.getHighLightedItemClass();
     				var t = this.target;
