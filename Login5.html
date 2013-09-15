@@ -11,18 +11,23 @@
 <script>
 	require(["dojo/dom", "dojo/_base/window", "LoginWidget/LoginWidget", 
 	         "LoginWidget/DropDownMenuWidget", "LoginWidget/DropDownMenuWithLocalDataWidget", 
+	         "LoginWidget/DropDownMenuWithAjaxWidget", "LoginWidget/DropDownMenuWithJsonpWidget",
 	         "dojo/domReady!"],
-		function(dom, win, LoginWidget, DropDownMenu, DropDownMenuWithLocalData) {
+		function(dom, win, LoginWidget, DropDownMenu, DropDownMenuWithLocalData, DropDownMenuWithAjax, DropDownMenuWithJsonp) {
 			var out = dom.byId("loginbox");
 			var lw = new LoginWidget().placeAt(out);
 			var t = dom.byId("user-txt");
 			var opts = {
 					cname : "ddm-login",
 					targetNode: t,
-					local: ["ca.ibm.com","cn.ibm.com","in.ibm.com","uk.ibm.com","us.ibm.com"]
+					local: ["ca.ibm.com","cn.ibm.com","in.ibm.com","uk.ibm.com","us.ibm.com"],
+					//url: "servers.json"
+					url: "http://127.0.0.1:8888/"
 			}
 			//var ddm = new DropDownMenu(opts).placeAt(win.body());
-			var ddm = new DropDownMenuWithLocalData(opts).placeAt(win.body());
+			//var ddm = new DropDownMenuWithLocalData(opts).placeAt(win.body());
+			//var ddm = new DropDownMenuWithAjax(opts).placeAt(win.body());
+			var ddm = new DropDownMenuWithJsonp(opts).placeAt(win.body());
 		}
 	);
 </script>
