@@ -44,6 +44,8 @@ define(["dojo/_base/declare",
 	        	    on(window, "resize", function(evt){self.setPosition();}),
 	        	    on(this.target, "blur", function(evt){self.hide();}),
 	        	    on(this.target, "click", function(evt){
+	        	    	evt.preventDefault();
+	        	    	evt.stopPropagation();
 	        	    	self.update();
 	        	    	self.show();
 	        	    }),
