@@ -1,3 +1,4 @@
+//not really dojofied
 define([], function(){
 		return {
 	        deleteAllSpaces : function (txt) {

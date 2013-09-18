@@ -144,14 +144,13 @@ define(["dojo/_base/declare",
     			}
     		},
     		
-    		getItems: function () {
-    			return ["ca.ibm.com","cn.ibm.com","in.ibm.com","uk.ibm.com","us.ibm.com"];
-    		},
-    		
+    		//to be overwritten
     		update: function() {
-    			var serverList = this.getItems();
+    			/*
+    			var serverList = ["ca.ibm.com","cn.ibm.com","in.ibm.com","uk.ibm.com","us.ibm.com"];
     			var items = ddmUtils.extendEmailServers(serverList, this.target.value);
     			this.fillItems(items);
+    			*/
     		}
     		
         });

@@ -13,7 +13,9 @@ define(["dojo/_base/declare",
 				if (opts) this.localData = opts.local;
 			},
         	
-			getItems: function() {
+			update: function() {
+    			var items = ddmUtils.extendEmailServers(this.localData, this.target.value);
+    			this.fillItems(items);
 				return this.localData;
 			}			
 		});	

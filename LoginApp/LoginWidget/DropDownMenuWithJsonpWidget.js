@@ -27,7 +27,7 @@ define(["dojo/_base/declare",
 			    			self.fillItems(items);
 						},
 						function(error) {
-							
+							console.log(error);
 						}
 				);
 			}			
