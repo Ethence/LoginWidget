@@ -4,14 +4,16 @@
 <title>Hello Widget</title>
 <link rel="stylesheet" type="text/css" href="Login5.css">
 <script src="//ajax.googleapis.com/ajax/libs/dojo/1.9.1/dojo/dojo.js" 
-	data-dojo-config="async: true, packages: [{
-		name: 'LoginWidget',
-		location: location.pathname.replace(/\/[^/]+$/, '') + '/LoginApp/LoginWidget'
-	}]"></script>
+	data-dojo-config="async: true, packages: [
+		{name: 'LoginWidget',
+			location: location.pathname.replace(/\/[^/]+$/, '') + '/LoginApp/LoginWidget'},
+		{name: 'DropDownMenuWidget',
+			location: location.pathname.replace(/\/[^/]+$/, '') + '/LoginApp/DropDownMenuWidget'}
+	]"></script>
 <script>
 	require(["dojo/dom", "dojo/_base/window", "LoginWidget/LoginWidget", 
-	         "LoginWidget/DropDownMenuWidget", "LoginWidget/DropDownMenuWithLocalDataWidget", 
-	         "LoginWidget/DropDownMenuWithAjaxWidget", "LoginWidget/DropDownMenuWithJsonpWidget",
+	         "DropDownMenuWidget/DropDownMenuWidget", "DropDownMenuWidget/DropDownMenuWithLocalDataWidget", 
+	         "DropDownMenuWidget/DropDownMenuWithAjaxWidget", "DropDownMenuWidget/DropDownMenuWithJsonpWidget",
 	         "dojo/domReady!"],
 		function(dom, win, LoginWidget, DropDownMenu, DropDownMenuWithLocalData, DropDownMenuWithAjax, DropDownMenuWithJsonp) {
 			var out = dom.byId("loginbox");

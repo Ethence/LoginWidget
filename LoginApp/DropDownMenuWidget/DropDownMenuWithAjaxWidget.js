@@ -1,12 +1,12 @@
 define(["dojo/_base/declare",
         "dojo/_base/lang",
-        "dojo/request/script",
+        "dojo/request",
         "dojo/json",
-        "LoginWidget/DropDownMenuUtils",
-        "LoginWidget/DropDownMenuWidget"],
+        "DropDownMenuWidget/DropDownMenuUtils",
+        "DropDownMenuWidget/DropDownMenuWidget"],
 	function(declare,
 			 lang,
-			 script,
+			 request,
 			 JSON,
 			 ddmUtils,
 			 DropDownMenu){
@@ -19,8 +19,8 @@ define(["dojo/_base/declare",
         	
 			update: function() {
 				var self = this;
-				script.get(this.url, {
-					jsonp: "callback"
+				request.get(this.url, {
+					handleAs: "json"
 				}).then(
 						function(data) {
 			    			var items = ddmUtils.extendEmailServers(data, self.target.value);
