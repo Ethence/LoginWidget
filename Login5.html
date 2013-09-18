@@ -11,24 +11,39 @@
 			location: location.pathname.replace(/\/[^/]+$/, '') + '/LoginApp/DropDownMenuWidget'}
 	]"></script>
 <script>
-	require(["dojo/dom", "dojo/_base/window", "LoginWidget/LoginWidget", 
+	require(["dojo/dom", "dojo/_base/window", "dojo/io-query", "LoginWidget/LoginWidget", 
 	         "DropDownMenuWidget/DropDownMenuWidget", "DropDownMenuWidget/DropDownMenuWithLocalDataWidget", 
 	         "DropDownMenuWidget/DropDownMenuWithAjaxWidget", "DropDownMenuWidget/DropDownMenuWithJsonpWidget",
-	         "dojo/domReady!"],
-		function(dom, win, LoginWidget, DropDownMenu, DropDownMenuWithLocalData, DropDownMenuWithAjax, DropDownMenuWithJsonp) {
-			var out = dom.byId("loginbox");
-			var lw = new LoginWidget().placeAt(out);
-			var t = dom.byId("user-txt");
-			var opts = {
-					cname : "ddm-login",
-					targetNode: t,
-					local: ["ca.ibm.com","cn.ibm.com","in.ibm.com","uk.ibm.com","us.ibm.com"],
-					//url: "servers.json"
-					url: "http://127.0.0.1:8888/"
-			}
-			//var ddm = new DropDownMenuWithLocalData(opts).placeAt(win.body());
-			//var ddm = new DropDownMenuWithAjax(opts).placeAt(win.body());
-			var ddm = new DropDownMenuWithJsonp(opts).placeAt(win.body());
+             "dojo/domReady!"],
+		function(dom, win, ioQuery, LoginWidget, DropDownMenu, DropDownMenuWithLocalData, DropDownMenuWithAjax, DropDownMenuWithJsonp) {
+			var demo = {
+				opts : {
+					cnmae : "ddm-login"
+				},
+				local: function () {
+					this.opts.local = ["ca.ibm.com","cn.ibm.com","in.ibm.com","uk.ibm.com","us.ibm.com"];
+					var ddm = new DropDownMenuWithLocalData(this.opts).placeAt(win.body());
+				},
+				ajax: function() {
+					this.opts.url = "servers.json";
+					var ddm = new DropDownMenuWithAjax(this.opts).placeAt(win.body());
+				},
+				jsonp: function() {
+					this.opts.url = "http://127.0.0.1:8888/";
+					var ddm = new DropDownMenuWithJsonp(this.opts).placeAt(win.body());
+				},
+				run: function() {
+		        	var queries = ioQuery.queryToObject(dojo.doc.location.search.substring(1));
+		        	var m = queries["method"];
+		        	if (!m) m = "local";
+					var out = dom.byId("loginbox");
+					var lw = new LoginWidget().placeAt(out);
+					var t = dom.byId("user-txt");
+					this.opts.targetNode = t;
+		            if (this[m]) this[m]();
+				}
+			};
+			demo.run();
 		}
 	);
 </script>

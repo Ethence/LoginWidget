@@ -38,7 +38,7 @@ define([], function(){
 	                return strs;
 	            }
 	            else return [];
-	        },
+	        }
 		};
 	}
 );
