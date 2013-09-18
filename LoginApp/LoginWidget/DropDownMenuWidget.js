@@ -97,7 +97,6 @@ define(["dojo/_base/declare",
     		},
     		
     		addStyle: function () {
-    			//domStyle.set(this.domNode, {"height": "200px", "background": "white"});
     			domStyle.set(this.domNode, {"overflow": "hidden", "background": "white"});
     			var style = query("style")[0];
     			if (!style) style = domConstruct.create("style", {"type" : "text/css"}, query("head")[0]);    			

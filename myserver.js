@@ -18,13 +18,14 @@ var cnt = 0;
 http.createServer(function (req, res) {;
 
     var servers = ["'ca.ibm.com'", "'cn.ibm.com'", "'in.ibm.com'", "'uk.ibm.com'", "'us.ibm.com'"];
+    //var servers = ["ca.ibm.com", "cn.ibm.com", "in.ibm.com", "uk.ibm.com", "us.ibm.com"];
     var queries = url.parse(req.url, true).query;
     if (queries["callback"]) {
-        //var cb = queries["callback"];
+        var cb = queries["callback"];
         randomizeServers(servers);
         res.writeHead(200, {'Content-Type': 'application/javascript'});
-        //res.write(cb +  "(["+servers+"]);");
-        res.write(["+servers+"]);
+        res.write(cb +  "(["+servers+"]);");
+        //res.write("["+servers+"]");
         res.end();
     }
 
