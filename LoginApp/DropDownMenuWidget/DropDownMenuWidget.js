@@ -9,8 +9,6 @@ define(["dojo/_base/declare",
         "dojo/on",
         "dojo/keys",
         "dijit/_WidgetBase", 
-        "dijit/_TemplatedMixin",
-        "dojo/text!./DropDownMenuTemplates/DropDownMenuTemplate.html",
         "DropDownMenuWidget/DropDownMenuUtils",
         "dojo/NodeList-traverse"],
     function(declare,
@@ -24,13 +22,10 @@ define(["dojo/_base/declare",
     		 on,
     		 keys,
     		 _WidgetBase,
-    		 _TemplatedMixin,
-    		 template,
     		 ddmUtils){
 		
         return declare(_WidgetBase, {
         	baseClass: "ddm-default",
-        	templateString: template,
         	
         	constructor: function(opts) {
         		if (lang.isString(opts.cname)) this.baseClass = opts.cname;
