@@ -7,6 +7,7 @@ define(["dojo/_base/declare",
         "dojo/dom-geometry",
         "dojo/dom-construct",
         "dojo/on",
+        "dojo/keys",
         "dijit/_WidgetBase", 
         "dijit/_TemplatedMixin",
         "dojo/text!./DropDownMenuTemplates/DropDownMenuTemplate.html",
@@ -21,6 +22,7 @@ define(["dojo/_base/declare",
     		 domGeom,
     		 domConstruct,
     		 on,
+    		 keys,
     		 _WidgetBase,
     		 _TemplatedMixin,
     		 template,
@@ -31,7 +33,7 @@ define(["dojo/_base/declare",
         	templateString: template,
         	
         	constructor: function(opts) {
-        		if (opts && typeof(opts.cname) === "string") this.baseClass = opts.cname; //change typeof to isString
+        		if (lang.isString(opts.cname)) this.baseClass = opts.cname;
         		if (opts.targetNode) this.target = opts.targetNode;
         	},
         	
@@ -50,6 +52,8 @@ define(["dojo/_base/declare",
 	        	    	self.show();
 	        	    }),
 	        	    on(this.target, "keyup", function(evt){
+	        	    	evt.preventDefault();
+	        	    	evt.stopPropagation();
 	        	    	var kc = evt.keyCode;
 	    				var itemClass = self.getItemClass();
 	    				var hltItemClass = self.getHighLightedItemClass();
@@ -57,25 +61,28 @@ define(["dojo/_base/declare",
 	    				var allItems = query("."+itemClass, self.domNode);
 
 	    				if (hltItemNode) {
-	    					if (kc == 37 || kc == 38) {
-	    						hltItemNode.forEach(function(item) {domClass.remove(item, hltItemClass);});
-	    						var prevNode = hltItemNode.prev();
-	    						if (prevNode.length>0) prevNode.forEach(function(item) {domClass.add(item, hltItemClass);});
-	    						else allItems.last().forEach(function(item) {domClass.add(item, hltItemClass);});
-	    					}
-	    					else if (kc == 39 || kc == 40) {
-	    						hltItemNode.forEach(function(item) {domClass.remove(item, hltItemClass);});
-	    						var nextNode = hltItemNode.next();
-	    						if (nextNode.length>0) nextNode.forEach(function(item) {domClass.add(item, hltItemClass);});
-	    						else allItems.first().forEach(function(item) {domClass.add(item, hltItemClass);});
-	    					}
-	    					else if (kc == 13) {
-	    						self.target.value = hltItemNode[0].innerHTML;
-	    						self.hide();
-	    					}
-	    					else {
-	    						self.update();
-	    						self.show();
+	    					switch(kc) {
+	    						case keys.UP_ARROW:
+	    						case keys.LEFT_ARROW:
+		    						hltItemNode.forEach(function(item) {domClass.remove(item, hltItemClass);});
+		    						var prevNode = hltItemNode.prev();
+		    						if (prevNode.length>0) prevNode.forEach(function(item) {domClass.add(item, hltItemClass);});
+		    						else allItems.last().forEach(function(item) {domClass.add(item, hltItemClass);});
+		    						break;
+	    						case keys.DOWN_ARROW:
+	    						case keys.RIGHT_ARROW:
+		    						hltItemNode.forEach(function(item) {domClass.remove(item, hltItemClass);});
+		    						var nextNode = hltItemNode.next();
+		    						if (nextNode.length>0) nextNode.forEach(function(item) {domClass.add(item, hltItemClass);});
+		    						else allItems.first().forEach(function(item) {domClass.add(item, hltItemClass);});
+		    						break;
+	    						case keys.ENTER:
+		    						self.target.value = hltItemNode[0].innerHTML;
+		    						self.hide();
+		    						break;
+		    					default:
+		    						self.update();
+		    						self.show();
 	    					}
 	    				}
 	        	    })
