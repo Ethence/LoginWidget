@@ -25,8 +25,7 @@ define(["dojo/_base/declare",
     		 ddmUtils){
 		
         return declare(_WidgetBase, {
-        	baseClass: "ddm-default",
-        	
+            baseClass: "ddm-default",
         	constructor: function(opts) {
         		if (lang.isString(opts.cname)) this.baseClass = opts.cname;
         		if (opts.targetNode) this.target = opts.targetNode;
@@ -36,24 +35,24 @@ define(["dojo/_base/declare",
         		this.inherited(arguments);
         	    this.setPosition();
         	    this.addStyle();
-        	    var self = this;
         	    this.own(
-	        	    on(window, "resize", function(evt){self.setPosition();}),
-	        	    on(this.target, "blur", function(evt){self.hide();}),
-	        	    on(this.target, "click", function(evt){
+        	        on(window, "resize", lang.hitch(this, "setPosition")),
+        	        on(this.target, "blur", lang.hitch(this, "hide")),
+	        	    on(this.target, "click", lang.hitch(this, function(evt){
 	        	    	evt.preventDefault();
 	        	    	evt.stopPropagation();
-	        	    	self.update();
-	        	    	self.show();
-	        	    }),
-	        	    on(this.target, "keyup", function(evt){
+	        	    	this.update();
+	        	    	this.show();
+	        	    })),
+	        	    
+	        	    on(this.target, "keyup", lang.hitch(this, function(evt){
 	        	    	evt.preventDefault();
 	        	    	evt.stopPropagation();
 	        	    	var kc = evt.keyCode;
-	    				var itemClass = self.getItemClass();
-	    				var hltItemClass = self.getHighLightedItemClass();
-	    				var hltItemNode = query("."+hltItemClass, self.domNode); //nodelist
-	    				var allItems = query("."+itemClass, self.domNode);
+	    				var itemClass = this.getItemClass();
+	    				var hltItemClass = this.getHighLightedItemClass();
+	    				var hltItemNode = query("."+hltItemClass, this.domNode); //nodelist
+	    				var allItems = query("."+itemClass, this.domNode);
 
 	    				if (hltItemNode) {
 	    					switch(kc) {
@@ -72,15 +71,15 @@ define(["dojo/_base/declare",
 		    						else allItems.first().forEach(function(item) {domClass.add(item, hltItemClass);});
 		    						break;
 	    						case keys.ENTER:
-		    						self.target.value = hltItemNode[0].innerHTML;
-		    						self.hide();
+		    						this.target.value = hltItemNode[0].innerHTML;
+		    						this.hide();
 		    						break;
 		    					default:
-		    						self.update();
-		    						self.show();
+		    						this.update();
+		    						this.show();
 	    					}
 	    				}
-	        	    })
+	        	    }))
         	    );
         	},
         	
@@ -91,23 +90,23 @@ define(["dojo/_base/declare",
         		return "active-"+this.baseClass+"-item";
         	},
         	
-    		setPosition: function () {
+    		setPosition: function() {
     		    var pos = domGeom.position(this.target);
     		    if (this.domNode) domStyle.set(this.domNode, 
     		    		{"position": "absolute",
 	    		    	 "left": pos.x + "px",
 	    		    	 "top": (pos.y + pos.h)+"px" ,
-	    		    	 "width": pos.w+"px"});
+	    		    	 "width": pos.w +"px"});
     		},
     		
-    		addStyle: function () {
+    		addStyle: function() {
     			domStyle.set(this.domNode, {"overflow": "hidden", "background": "white"});
     			var style = query("style")[0];
     			if (!style) style = domConstruct.create("style", {"type" : "text/css"}, query("head")[0]);    			
     			var actRuleText =  "color: white; background-color: blue;";
     			var actSel = "div.active-" + this.baseClass +"-item";
     			var optRuleText = "cursor: pointer;";
-    			var optSel = "div." + this.cname + "-item";
+    			var optSel = "div." + this.baseClass + "-item";
     			var cssTxtNode = domConstruct.toDom(optSel + " {" + optRuleText + "}\n" + actSel + " {" + actRuleText + "}");
     			domConstruct.place(cssTxtNode, style);
     		},
