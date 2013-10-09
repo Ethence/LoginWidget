@@ -7,7 +7,7 @@ define(["dojo/_base/declare",
     		 _TemplatedMixin,
     		 template){
         return declare([_WidgetBase, _TemplatedMixin], {
-        	baseClass: "SimpleWidget",
+        	baseClass: "loginbox",
         	templateString: template,
 
         });

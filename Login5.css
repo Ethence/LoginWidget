@@ -29,7 +29,7 @@ td {
 	display: none;
 }
 
-#loginbox {
+.loginbox {
 	position: relative;
 	top: 50%;
 	left: 50%;
