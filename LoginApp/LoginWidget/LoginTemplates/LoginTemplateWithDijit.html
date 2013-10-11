@@ -1,0 +1,52 @@
+	<div>
+		<div class="top-bar" data-dojo-type="dijit/layout/ContentPane"></div>
+		<div class="middle-bar" data-dojo-type="dijit/layout/ContentPane">
+
+			<div class="product-name" data-dojo-type="dijit/layout/ContentPane">
+				<span class="img-text">Storage Volume Controller</span>
+			</div>
+			<div class="sm" data-dojo-type="dijit/layout/ContentPane">
+				<span>Storage Management</span> (Fexpo 9.186....)
+			</div>
+
+			<!-- the table that sends login info to server -->
+			<div data-dojo-type="dijit/form/Form">
+				<table>
+					<tr>
+						<td class="label-cell">User Name:</td>
+						<td class="input-cell"><div data-dojo-type="dijit/form/TextBox" data-dojo-props="name: 'user'" id="user-txt"></div></td>
+					</tr>
+					<tr>
+						<td class="label-cell">Password:</td>
+						<td class="input-cell"><div data-dojo-type="dijit/form/TextBox" data-dojo-props="name: 'pswd', type: 'password'"></div></td>
+					</tr>
+					<tr>
+						<td>&nbsp;</td>
+						<td>
+						    <div data-dojo-type="dijit/form/ToggleButton" data-dojo-props="iconClass:'lgmunchecked', checked:'false', 
+						      onClick:function() {
+                                if (! this.checked)this.set('iconClass', 'lgmchecked');
+                                else this.set('iconClass', 'lgmunchecked');
+						      }"
+						    id="lgmcheck"></div>
+						    <span id="lgm">Low graphics mode</span>Log in
+						    <button data-dojo-type="dijit/form/Button" data-dojo-props="iconClass:'submitButton'" type="button" id="svc-submit"></button>
+						</td>
+					</tr>
+				</table>
+			</div>
+
+			<div class="product-img" data-dojo-type="dijit/layout/ContentPane">
+				<span class="img-text">Storage Volume Controller Product
+					Image</span>
+			</div>
+			<div class="alert" data-dojo-type="dijit/layout/ContentPane">
+				<span>CMMVC7065E Timeout communicating with the LDAP server.</span>
+			</div>
+		</div>
+		<div class="bottom-bar" data-dojo-type="dijit/layout/ContentPane">
+			<div class="ibmlogo">
+				<span class="img-text">IBM</span>
+			</div>
+		</div>
+	</div>

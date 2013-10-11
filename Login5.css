@@ -94,11 +94,12 @@ input[type="text"],input[type="password"] {
 	width: 203px;
 }
 
-input[type="checkbox"],input[type="button"] {
+
+input[type="checkbox"],input[type="button"],.dijitToggleButtonIconChar {
 	display: none;
 }
 
-input[type="checkbox"]+label {
+input[type="checkbox"]+label, .lgmunchecked {
 	display: inline-block;
 	background: url("./Images/checkbox-enabled.png") no-repeat left top;
 	width: 15px;
@@ -106,7 +107,7 @@ input[type="checkbox"]+label {
 	vertical-align: -1px;
 }
 
-input[type="checkbox"]:checked+label {
+input[type="checkbox"]:checked+label, .lgmchecked {
 	display: inline-block;
 	background: url("./Images/checkbox-selected.png") no-repeat left top;
 	width: 15px;
@@ -122,7 +123,7 @@ input[type="checkbox"]:checked+label {
 	padding-left: 4px;
 }
 
-input[type="button"]+label {
+input[type="button"]+label, .submitButton {
 	display: inline-block;
 	background: url("./Images/button.png") no-repeat;
 	width: 23px;
