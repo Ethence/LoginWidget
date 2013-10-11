@@ -13,7 +13,7 @@ define(["dojo/_base/declare",
         "dojo/NodeList-traverse"],
     function(declare,
     		 lang,
-    		 array,
+    		 array, //test
     		 query,
     		 domClass,
     		 domStyle,
