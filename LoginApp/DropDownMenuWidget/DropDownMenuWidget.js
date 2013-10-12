@@ -38,48 +38,8 @@ define(["dojo/_base/declare",
         	    this.own(
         	        on(window, "resize", lang.hitch(this, "setPosition")),
         	        on(this.target, "blur", lang.hitch(this, "hide")),
-	        	    on(this.target, "click", lang.hitch(this, function(evt){
-	        	    	evt.preventDefault();
-	        	    	evt.stopPropagation();
-	        	    	this.update();
-	        	    	this.show();
-	        	    })),
-	        	    
-	        	    on(this.target, "keyup", lang.hitch(this, function(evt){
-	        	    	evt.preventDefault();
-	        	    	evt.stopPropagation();
-	        	    	var kc = evt.keyCode;
-	    				var itemClass = this.getItemClass();
-	    				var hltItemClass = this.getHighLightedItemClass();
-	    				var hltItemNode = query("."+hltItemClass, this.domNode); //nodelist
-	    				var allItems = query("."+itemClass, this.domNode);
-
-	    				if (hltItemNode) {
-	    					switch(kc) {
-	    						case keys.UP_ARROW:
-	    						case keys.LEFT_ARROW:
-		    						hltItemNode.forEach(function(item) {domClass.remove(item, hltItemClass);});
-		    						var prevNode = hltItemNode.prev();
-		    						if (prevNode.length>0) prevNode.forEach(function(item) {domClass.add(item, hltItemClass);});
-		    						else allItems.last().forEach(function(item) {domClass.add(item, hltItemClass);});
-		    						break;
-	    						case keys.DOWN_ARROW:
-	    						case keys.RIGHT_ARROW:
-		    						hltItemNode.forEach(function(item) {domClass.remove(item, hltItemClass);});
-		    						var nextNode = hltItemNode.next();
-		    						if (nextNode.length>0) nextNode.forEach(function(item) {domClass.add(item, hltItemClass);});
-		    						else allItems.first().forEach(function(item) {domClass.add(item, hltItemClass);});
-		    						break;
-	    						case keys.ENTER:
-		    						this.target.value = hltItemNode[0].innerHTML;
-		    						this.hide();
-		    						break;
-		    					default:
-		    						this.update();
-		    						this.show();
-	    					}
-	    				}
-	        	    }))
+        	        on(this.target, "click",lang.hitch(this, "_onTargetClick")),
+        	        on(this.target, "keyup", lang.hitch(this, "_onTargetKeyUp"))
         	    );
         	},
         	
@@ -145,6 +105,49 @@ define(["dojo/_base/declare",
     					})
     				));
     			}
+    		},
+    		
+    		_onTargetClick: function(evt) {
+                evt.preventDefault();
+                evt.stopPropagation();
+                this.update();
+                this.show();
+    		},
+    		
+    		_onTargetKeyUp: function(evt) {
+                evt.preventDefault();
+                evt.stopPropagation();
+                var kc = evt.keyCode;
+                var itemClass = this.getItemClass();
+                var hltItemClass = this.getHighLightedItemClass();
+                var hltItemNode = query("."+hltItemClass, this.domNode); //nodelist
+                var allItems = query("."+itemClass, this.domNode);
+
+                if (hltItemNode) {
+                    switch(kc) {
+                        case keys.UP_ARROW:
+                        case keys.LEFT_ARROW:
+                            hltItemNode.forEach(function(item) {domClass.remove(item, hltItemClass);});
+                            var prevNode = hltItemNode.prev();
+                            if (prevNode.length>0) prevNode.forEach(function(item) {domClass.add(item, hltItemClass);});
+                            else allItems.last().forEach(function(item) {domClass.add(item, hltItemClass);});
+                            break;
+                        case keys.DOWN_ARROW:
+                        case keys.RIGHT_ARROW:
+                            hltItemNode.forEach(function(item) {domClass.remove(item, hltItemClass);});
+                            var nextNode = hltItemNode.next();
+                            if (nextNode.length>0) nextNode.forEach(function(item) {domClass.add(item, hltItemClass);});
+                            else allItems.first().forEach(function(item) {domClass.add(item, hltItemClass);});
+                            break;
+                        case keys.ENTER:
+                            this.target.value = hltItemNode[0].innerHTML;
+                            this.hide();
+                            break;
+                        default:
+                            this.update();
+                            this.show();
+                    }
+                }
     		},
     		
     		//to be overwritten
