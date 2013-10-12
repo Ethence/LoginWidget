@@ -10,7 +10,7 @@ define(["dojo/_base/declare",
         "dijit/form/CheckBox",
         "dijit/form/ToggleButton",
         "dijit/form/Button",
-        //"dojo/text!./LoginTemplates/LoginTemplate.html"],
+        //"dojo/text!./LoginTemplates/LoginTemplate.html"], //to use this template, need to comment out lgmcheckButtonWidget below
         "dojo/text!./LoginTemplates/LoginTemplateWithDijit.html"],
     function(declare,
              on,
@@ -30,7 +30,6 @@ define(["dojo/_base/declare",
         	templateString: template,
         	postCreate: function () {
         	    this.inherited(arguments);
-        	    //alert(this.lgmcheckButton);
         	    this.own(
         	        on(this.lgmcheckButtonWidget, "click", function() {
                         if (!this.checked)this.set('iconClass', 'lgmchecked');
