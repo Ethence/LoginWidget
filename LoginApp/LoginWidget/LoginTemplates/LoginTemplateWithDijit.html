@@ -23,12 +23,7 @@
 					<tr>
 						<td>&nbsp;</td>
 						<td>
-						    <div data-dojo-type="dijit/form/ToggleButton" data-dojo-props="iconClass:'lgmunchecked', checked:'false', 
-						      onClick:function() {
-                                if (! this.checked)this.set('iconClass', 'lgmchecked');
-                                else this.set('iconClass', 'lgmunchecked');
-						      }"
-						    id="lgmcheck"></div>
+						    <div data-dojo-type="dijit/form/ToggleButton" data-dojo-props="iconClass:'lgmunchecked', checked:'false'", data-dojo-attach-point="lgmcheckButtonWidget", id="lgmcheck"></div>
 						    <span id="lgm">Low graphics mode</span>Log in
 						    <button data-dojo-type="dijit/form/Button" data-dojo-props="iconClass:'submitButton'" type="button" id="svc-submit"></button>
 						</td>

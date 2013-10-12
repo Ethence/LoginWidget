@@ -1,4 +1,5 @@
 define(["dojo/_base/declare",
+        "dojo/on",
         "dijit/_WidgetBase", 
         "dijit/_TemplatedMixin", 
         "dijit/_WidgetsInTemplateMixin",
@@ -11,7 +12,8 @@ define(["dojo/_base/declare",
         "dijit/form/Button",
         //"dojo/text!./LoginTemplates/LoginTemplate.html"],
         "dojo/text!./LoginTemplates/LoginTemplateWithDijit.html"],
-    function(declare, 
+    function(declare,
+             on,
     		 _WidgetBase,
     		 _TemplatedMixin,
     		 _WidgetsInTemplateMixin,
@@ -26,5 +28,15 @@ define(["dojo/_base/declare",
         return declare([_WidgetBase, _TemplatedMixin, _WidgetsInTemplateMixin], {
         	baseClass: "loginbox",
         	templateString: template,
+        	postCreate: function () {
+        	    this.inherited(arguments);
+        	    //alert(this.lgmcheckButton);
+        	    this.own(
+        	        on(this.lgmcheckButtonWidget, "click", function() {
+                        if (!this.checked)this.set('iconClass', 'lgmchecked');
+                        else this.set('iconClass', 'lgmunchecked');        	            
+        	        })
+        	    );
+        	}
         });
 });
